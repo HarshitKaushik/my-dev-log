@@ -15,4 +15,14 @@ A log of my experiences as a software engineer from March 7, 2019
 - Event binding - We can bind to all the events available with an HTML element using event binding.
 - How do you know to which Properties or Events of HTML Elements you may bind? You can basically bind to all Properties and Events - a good idea is to console.log()  the element you're interested in to see which properties and events it offers.
 - ```<ng-template>``` is an angular element for rendering HTML. It is never displayed directly. It can be displayed using structural directive, ViewContainerRef etc.
+- Option "spec" is deprecated: Use "skipTests" instead.
+- There can be only one special method with the name "constructor" in a class. Having more than one occurrence of a constructor method in a class will throw a SyntaxError error. A constructor can use the super keyword to call the constructor of a parent class. If you do not specify a constructor method, a default constructor is used.
+- We can use Angular Augury to visualize component tree, route tree and modules information.
+- By default, all the properties of an Angular component are only accessible inside the component and not bindable from outside. That's why we use @Input().
+- Angular enforces style encapsulation for a component by giving a unique attribute to each element in the component. By doing this, Angular emulates Shadow DOMs which aren't supported by all browsers.
+- Permitting direct access to the DOM can make your application more vulnerable to XSS attacks. Carefully review any use of ElementRef in your code.
+- Use this API as the last resort when direct access to DOM is needed. Use templating and data-binding provided by Angular instead. Alternatively you can take a look at Renderer2 which provides API that can safely be used even when direct access to native elements is not supported.
+- Relying on direct DOM access creates tight coupling between your application and rendering layers which will make it impossible to separate the two and deploy your application into a web worker.
+- We cannot have more than 1 structural directives on an element in the component.
+- Angular is not limited to running in the browser. It can also run in a service worker from where it can serve the DOM.
 - 
