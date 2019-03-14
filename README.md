@@ -25,4 +25,11 @@ A log of my experiences as a software engineer from March 7, 2019
 - Relying on direct DOM access creates tight coupling between your application and rendering layers which will make it impossible to separate the two and deploy your application into a web worker.
 - We cannot have more than 1 structural directives on an element in the component.
 - Angular is not limited to running in the browser. It can also run in a service worker from where it can serve the DOM.
+- We can use @HostListener to listen to the events on the host element of the directive. A good way to make reactive functions.
+- We can use @HostBinding to bind to any property of the host element of the directive. We can then dynamically change the value of this property.
+- The value on the right only gets interpreted when using brackets. You can remove the brackets whenever you see quotes in quotes on the right: [anyStringProperty]="'hello'" can be changed to anyStringProperty = "hello"
+- We can also have an input property in the directive with the same name as directive name and we can bind it from the host element. Angular knows that this is a property of a directive with the same name and binds the passed values to the property of the directive.
+- the ```set attribute(propertyValue)``` should have the same name as the structural directive when building a structural directive. It will be called everytime the value of the expression of the directive changes.
+- ViewContainerRef- Gives the reference to the view container of a structural directive.
+- TemplateRef - Gives the reference to the template of a structural directive.
 - 
