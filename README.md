@@ -32,4 +32,20 @@ A log of my experiences as a software engineer from March 7, 2019
 - the ```set attribute(propertyValue)``` should have the same name as the structural directive when building a structural directive. It will be called everytime the value of the expression of the directive changes.
 - ViewContainerRef- Gives the reference to the view container of a structural directive.
 - TemplateRef - Gives the reference to the template of a structural directive.
+- We can abstract out the functionality into attribute/structural directives if needed.
+- imports makes the exported declarations of other modules available in the current module
+declarations are to make directives (including components and pipes) from the current module available to other directives in the current module. Selectors of directives, components or pipes are only matched against the HTML if they are declared or imported.
+- providers are to make services and values known to DI. They are added to the root scope and they are injected to other services or directives that have them as dependency.
+- A special case for providers are lazy loaded modules that get their own child injector. providers of a lazy loaded module are only provided to this lazy loaded module by default (not the whole application as it is with other modules).
+- exports makes the components, directives, and pipes available in modules that add this module to imports.  exports can also be used to re-export modules such as CommonModule and FormsModule, which is often done in shared modules.
+- Angular uses Hierarchial dependency injector. A service can be provided in multiple places.
+- AppModule - Same instance of the service is available Application-wide.
+- AppComponent - Same instance of the Service is available for all components (but not for other services).
+- Any other component - Same instance of the service is available to the component and all its child components.
+- EventEmitter - Use in directives and components to emit custom events synchronously or asynchronously, and register handlers for those events by subscribing to an instance.
+```typescript
+constructor(isAsync: boolean = false)
+```
+- Constructor of EventEmitter (above) - Creates an instance of this class that can deliver events synchronously or asynchronously.
+- The slice() method returns a shallow copy of a portion of an array into a new array object selected from begin to end (end not included). The original array will not be modified.
 - 
