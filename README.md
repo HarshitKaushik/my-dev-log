@@ -2,7 +2,6 @@
 A loosely-updated log of my experiences as a software engineer.
 
 ## Java
-- 
 ### SAX Parsing
 - SAX (Simple API for XML) is an event-driven online algorithm for parsing XML documents, with an API developed by the XML-DEV mailing list.
 - SAX provides a mechanism for reading data from an XML document that is an alternative to that provided by the Document Object Model (DOM). Where the DOM operates on the document as a whole — building the full abstract syntax tree of an XML document for convenience of the user. SAX parsers operate on each piece of the XML document sequentially, issuing parsing events while making a single pass[clarification needed] through the input stream.
@@ -69,3 +68,15 @@ constructor(isAsync: boolean = false)
 ## Postgres
 - JSONB is a powerful tool, but it comes at some cost because you need to adapt the way you query and handle the data. And it’s not rare to load the entire jsonb object into memory, transform it using your preferred programming language, and then saving it back to the database. But, you just created another problem: performance bottlenecks and resource waste.
 - Dumps can be output in script or archive file formats. Script dumps are plain-text files containing the SQL commands required to reconstruct the database to the state it was in at the time it was saved. To restore from such a script, feed it to psql(1). Script files can be used to reconstruct the database even on other machines and other architectures; with some modifications even on other SQL database products. The alternative archive file formats must be used with pg_restore(1) to rebuild the database. They allow pg_restore to be selective about what is restored, or even to reorder the items prior to being restored. The archive file formats are designed to be portable across architectures.
+
+## Python
+- ASGI (Asynchronous Server Gateway Interface) is a spiritual successor to WSGI, intended to provide a standard interface between async-capable Python web servers, frameworks, and applications.
+- Where WSGI provided a standard for synchronous Python apps, ASGI provides one for both asynchronous and synchronous apps, with a WSGI backwards-compatibility implementation and multiple servers and application frameworks.
+- The ```__init__.py``` files are required to make Python treat the directories as containing packages; this is done to prevent directories with a common name, such as string, from unintentionally hiding valid modules that occur later on the module search path. In the simplest case, __init__.py can just be an empty file, but it can also execute initialization code for the package or set the __all__ variable, described later.
+
+### Django
+- You’ve started the Django development server, a lightweight Web server written purely in Python. We’ve included this with Django so you can develop things rapidly, without having to deal with configuring a production server – such as Apache – until you’re ready for production.
+- By default, the runserver command starts the development server on the internal IP at port 8000.
+- The development server automatically reloads Python code for each request as needed. You don’t need to restart the server for code changes to take effect. However, some actions like adding files **don’t trigger** a restart, so you’ll have to restart the server in these cases.
+- What’s the difference between a project and an app? An app is a Web application that does something – e.g., a Weblog system, a database of public records or a small poll app. A project is a collection of configuration and apps for a particular website. A project can contain multiple apps. An app can be in multiple projects.
+- The include() function allows referencing other URLconfs. Whenever Django encounters include(), it chops off whatever part of the URL matched up to that point and sends the remaining string to the included URLconf for further processing.
