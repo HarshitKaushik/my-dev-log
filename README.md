@@ -73,6 +73,7 @@ constructor(isAsync: boolean = false)
 - ASGI (Asynchronous Server Gateway Interface) is a spiritual successor to WSGI, intended to provide a standard interface between async-capable Python web servers, frameworks, and applications.
 - Where WSGI provided a standard for synchronous Python apps, ASGI provides one for both asynchronous and synchronous apps, with a WSGI backwards-compatibility implementation and multiple servers and application frameworks.
 - The ```__init__.py``` files are required to make Python treat the directories as containing packages; this is done to prevent directories with a common name, such as string, from unintentionally hiding valid modules that occur later on the module search path. In the simplest case, __init__.py can just be an empty file, but it can also execute initialization code for the package or set the __all__ variable, described later.
+- A PKL file is a file created by pickle, a Python module that enables objects to be serialized to files on disk and deserialized back into the program at runtime. It contains a byte stream that represents the objects.
 
 ### Django
 - You’ve started the Django development server, a lightweight Web server written purely in Python. We’ve included this with Django so you can develop things rapidly, without having to deal with configuring a production server – such as Apache – until you’re ready for production.
@@ -87,3 +88,14 @@ constructor(isAsync: boolean = false)
 - path() argument: kwargs - Arbitrary keyword arguments can be passed in a dictionary to the target view.
 - path() argument: name - Naming your URL lets you refer to it unambiguously from elsewhere in Django, especially from within templates. **This powerful feature allows you to make global changes to the URL patterns of your project while only touching a single file.**
 - By default, the configuration uses SQLite. If you’re new to databases, or you’re just interested in trying Django, this is the easiest choice. SQLite is included in Python, so you won’t need to install anything else to support your database. When starting your first real project, however, you may want to use a more scalable database like PostgreSQL, to avoid database-switching headaches down the road.
+- By default, INSTALLED_APPS contains the following apps, all of which come with Django:
+1. django.contrib.admin – The admin site. You’ll use it shortly.
+2. django.contrib.auth – An authentication system.
+3. django.contrib.contenttypes – A framework for content types.
+4. django.contrib.sessions – A session framework.
+5. django.contrib.messages – A messaging framework.
+6. django.contrib.staticfiles – A framework for managing static files.
+- For the minimalists - Like we said above, the default applications are included for the common case, but not everybody needs them. If you don’t need any or all of them, feel free to comment-out or delete the appropriate line(s) from INSTALLED_APPS before running migrate. The migrate command will only run migrations for apps in INSTALLED_APPS.
+- Each model is represented by a class that subclasses ```django.db.models.Model```. Each model has a number of class variables, each of which represents a database field in the model.
+- Django apps are “pluggable”: You can use an app in multiple projects, and you can distribute apps, because they don’t have to be tied to a given Django installation.
+- When you run ```makemigrations```, you’re telling Django that you’ve made some changes to your models (in this case, you’ve made new ones) and that you’d like the changes to be stored as a migration.
