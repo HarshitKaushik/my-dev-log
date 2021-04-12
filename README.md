@@ -68,6 +68,12 @@ constructor(isAsync: boolean = false)
 ## Postgres
 - JSONB is a powerful tool, but it comes at some cost because you need to adapt the way you query and handle the data. And it’s not rare to load the entire jsonb object into memory, transform it using your preferred programming language, and then saving it back to the database. But, you just created another problem: performance bottlenecks and resource waste.
 - Dumps can be output in script or archive file formats. Script dumps are plain-text files containing the SQL commands required to reconstruct the database to the state it was in at the time it was saved. To restore from such a script, feed it to psql(1). Script files can be used to reconstruct the database even on other machines and other architectures; with some modifications even on other SQL database products. The alternative archive file formats must be used with pg_restore(1) to rebuild the database. They allow pg_restore to be selective about what is restored, or even to reorder the items prior to being restored. The archive file formats are designed to be portable across architectures.
+- Now you can initialize the physical space on your hard-disk to allocate databases. To do this, create a default postgres database on the command line in case it didn't happen automatically.
+```bash
+initdb '/usr/local/var/postgres'
+```
+- You could also implement a script to start the server each time you boot up the machine, but I like to have control over when to start and stop my database server to avoid complications.
+
 
 ## Python
 - ASGI (Asynchronous Server Gateway Interface) is a spiritual successor to WSGI, intended to provide a standard interface between async-capable Python web servers, frameworks, and applications.
@@ -76,6 +82,9 @@ constructor(isAsync: boolean = false)
 - A PKL file is a file created by pickle, a Python module that enables objects to be serialized to files on disk and deserialized back into the program at runtime. It contains a byte stream that represents the objects.
 - In python, the ```with``` keyword is used when working with unmanaged resources (like file streams). It is similar to the using statement in VB.NET and C#. It allows you to ensure that a resource is "cleaned up" when the code that uses it finishes running, even if exceptions are thrown. It provides 'syntactic sugar' for try/finally blocks.
 - If you are running your module (the source file) as the main program the interpreter will assign the hard-coded string ```__main__``` to the ```__name__``` variable.
+- In Python, the 'null' object is the singleton ```None```.
+### Psycopg
+- Psycopg is the most popular PostgreSQL database adapter for the Python programming language. Its main features are the complete implementation of the Python DB API 2.0 specification and the thread safety (several threads can share the same connection). It was **designed for heavily multi-threaded applications** that create and destroy lots of cursors and make a large number of concurrent “INSERT”s or “UPDATE”s.
 
 ### Django
 - You’ve started the Django development server, a lightweight Web server written purely in Python. We’ve included this with Django so you can develop things rapidly, without having to deal with configuring a production server – such as Apache – until you’re ready for production.
@@ -101,6 +110,10 @@ constructor(isAsync: boolean = false)
 - Each model is represented by a class that subclasses ```django.db.models.Model```. Each model has a number of class variables, each of which represents a database field in the model.
 - Django apps are “pluggable”: You can use an app in multiple projects, and you can distribute apps, because they don’t have to be tied to a given Django installation.
 - When you run ```makemigrations```, you’re telling Django that you’ve made some changes to your models (in this case, you’ve made new ones) and that you’d like the changes to be stored as a migration.
+
+### Flask
+- “Micro” does not mean that your whole web application has to fit into a single Python file (although it certainly can), **nor does it mean that Flask is lacking in functionality**. The “micro” in microframework means Flask aims to keep the core simple but extensible. Flask won’t make many decisions for you, such as what database to use. Those decisions that it does make, such as what templating engine to use, are easy to change. Everything else is up to you, so that Flask can be everything you need and nothing you don’t.
+- Flask is a micro web framework written in Python. It is classified as a microframework because it does not require particular tools or libraries. It has no database abstraction layer, form validation, or any other components where pre-existing third-party libraries provide common functions. However, Flask supports extensions that can add application features as if they were implemented in Flask itself. Extensions exist for object-relational mappers, form validation, upload handling, various open authentication technologies and several common framework related tools.
 
 ### Pandas
 - ```pandas.DataFrame.shape``` - Return a tuple representing the dimensionality of the DataFrame.
