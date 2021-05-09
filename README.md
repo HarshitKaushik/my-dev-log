@@ -83,6 +83,7 @@ initdb '/usr/local/var/postgres'
 - In python, the ```with``` keyword is used when working with unmanaged resources (like file streams). It is similar to the using statement in VB.NET and C#. It allows you to ensure that a resource is "cleaned up" when the code that uses it finishes running, even if exceptions are thrown. It provides 'syntactic sugar' for try/finally blocks.
 - If you are running your module (the source file) as the main program the interpreter will assign the hard-coded string ```__main__``` to the ```__name__``` variable.
 - In Python, the 'null' object is the singleton ```None```.
+- Although popular languages like Java and PHP have in-built switch statement, you may be surprised to know that Python language doesn’t have one. As such, you may be tempted to use a series of if-else-if blocks, using an if condition for each case of your switch statement.
 ### Psycopg
 - Psycopg is the most popular PostgreSQL database adapter for the Python programming language. Its main features are the complete implementation of the Python DB API 2.0 specification and the thread safety (several threads can share the same connection). It was **designed for heavily multi-threaded applications** that create and destroy lots of cursors and make a large number of concurrent “INSERT”s or “UPDATE”s.
 
@@ -110,9 +111,15 @@ initdb '/usr/local/var/postgres'
 - Each model is represented by a class that subclasses ```django.db.models.Model```. Each model has a number of class variables, each of which represents a database field in the model.
 - Django apps are “pluggable”: You can use an app in multiple projects, and you can distribute apps, because they don’t have to be tied to a given Django installation.
 - When you run ```makemigrations```, you’re telling Django that you’ve made some changes to your models (in this case, you’ve made new ones) and that you’d like the changes to be stored as a migration.
+- Serializers allow complex data such as querysets and model instances to be converted to native Python datatypes that can then be easily rendered into JSON, XML or other content types. Serializers also provide deserialization, allowing parsed data to be converted back into complex types, after first validating the incoming data.
 - You need to call ```is_valid``` during deserialization process before writing data to DB. ```is_valid``` perform validation of input data and confirm that this data contain all required fields and all fields have correct types. If validation process succeded ```is_valid``` set ```validated_data``` dictionary which is used for creating or updating data in DB. Otherwise, serializer's property errors will contain information about errors in input data, and you can send this information as HTTP response in your view.
 - If the model field has ```blank=True```, then ```required``` is set to ```False``` on the form field. Otherwise, ```required=True```.
 - Sometimes even ```Manager.raw()``` isn’t quite enough: you might need to perform queries that don’t map cleanly to models, or directly execute UPDATE, INSERT, or DELETE queries.
+- ```RunScript``` -  The runscript command lets you run an arbitrary set of python commands within the Django context. This file must implement a run() function. This is what gets called when you run the script. You can import any models or other parts of your django project to use in these scripts.
+```bash
+python manage.py runscript ${scriptName}
+```
+- **Note: You can put a script inside a scripts folder in any of your apps too.**
 
 ### Flask
 - “Micro” does not mean that your whole web application has to fit into a single Python file (although it certainly can), **nor does it mean that Flask is lacking in functionality**. The “micro” in microframework means Flask aims to keep the core simple but extensible. Flask won’t make many decisions for you, such as what database to use. Those decisions that it does make, such as what templating engine to use, are easy to change. Everything else is up to you, so that Flask can be everything you need and nothing you don’t.
