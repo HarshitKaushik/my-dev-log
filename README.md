@@ -84,6 +84,25 @@ initdb '/usr/local/var/postgres'
 - If you are running your module (the source file) as the main program the interpreter will assign the hard-coded string ```__main__``` to the ```__name__``` variable.
 - In Python, the 'null' object is the singleton ```None```.
 - Although popular languages like Java and PHP have in-built switch statement, you may be surprised to know that Python language doesn’t have one. As such, you may be tempted to use a series of if-else-if blocks, using an if condition for each case of your switch statement.
+- What does ```%s``` mean in a Python format string? The % symbol is used in Python with a large variety of data types and configurations. ```%s``` specifically is used to perform concatenation of strings together. It allows us to format a value inside a string. It is used to incorporate another string within a string. It automatically provides type conversion from value to string.
+- How to speed test in Python? ```datetime.timedelta``` is just the difference between two datetimes. So it's like a period of time, in days/seconds/microseconds. (Guess, I had the "it couldn't be that easy" moment.)
+```python
+>>> import datetime
+>>> a = datetime.datetime.now()
+>>> b = datetime.datetime.now()
+>>> c = b - a
+
+>>> c
+datetime.timedelta(0, 4, 316543)
+>>> c.days
+0
+>>> c.seconds
+4
+>>> c.microseconds
+316543
+```
+- In ```datetime.timedelta``` variable, use ```.total_seconds()``` to access the time delta in seconds which is a floating-point value.
+
 ### Psycopg
 - Psycopg is the most popular PostgreSQL database adapter for the Python programming language. Its main features are the complete implementation of the Python DB API 2.0 specification and the thread safety (several threads can share the same connection). It was **designed for heavily multi-threaded applications** that create and destroy lots of cursors and make a large number of concurrent “INSERT”s or “UPDATE”s.
 
@@ -119,11 +138,57 @@ initdb '/usr/local/var/postgres'
 ```bash
 python manage.py runscript ${scriptName}
 ```
-- **Note: You can put a script inside a scripts folder in any of your apps too.**
+- **Note:** You can put a script inside a scripts folder in any of your apps too.
+- How to get field whose name is dynamic? See the below code.
+```python
+kw = {field_name: name}
+value = model.objects.get(**kw)
+```
+- How to use ```in``` clause with django ORM?
+```python
+value = model.objects.get(id__in=[1,2,3,4])
+```
+- Django equivalent of SQL ```not in``` clause?
+```python
+value = model.objects.exclude(id_in=[1,2,3,4])
+```
+- ```exclude(**kwargs)``` returns a new QuerySet containing objects that do not match the given lookup parameters.
+- Complex lookups with ```Q``` objects - A Q object (django.db.models.Q) is an object used to encapsulate a collection of keyword arguments. These keyword arguments are specified as in “Field lookups” above. Q objects can be combined using the & and | operators. When an operator is used on two Q objects, it yields a new Q object.
+```python
+from django.db.models import Q
+Q(question__startswith='What')
+```
+- What is the purpose and use of ```**kwargs```? You can use ```**kwargs``` to let your functions take an arbitrary number of keyword arguments ("kwargs" means "keyword arguments").
+```python
+>>> def print_keyword_args(**kwargs):
+...     # kwargs is a dict of the keyword args passed to the function
+...     for key, value in kwargs.iteritems():
+...         print "%s = %s" % (key, value)
+... 
+>>> print_keyword_args(first_name="John", last_name="Doe")
+first_name = John
+last_name = Doe
+```
+- Lookup functions can mix the use of Q objects and keyword arguments. All arguments provided to a lookup function (be they keyword arguments or Q objects) are “AND”ed together. However, if a Q object is provided, it must precede the definition of any keyword arguments.
 
 ### Flask
 - “Micro” does not mean that your whole web application has to fit into a single Python file (although it certainly can), **nor does it mean that Flask is lacking in functionality**. The “micro” in microframework means Flask aims to keep the core simple but extensible. Flask won’t make many decisions for you, such as what database to use. Those decisions that it does make, such as what templating engine to use, are easy to change. Everything else is up to you, so that Flask can be everything you need and nothing you don’t.
 - Flask is a micro web framework written in Python. It is classified as a microframework because it does not require particular tools or libraries. It has no database abstraction layer, form validation, or any other components where pre-existing third-party libraries provide common functions. However, Flask supports extensions that can add application features as if they were implemented in Flask itself. Extensions exist for object-relational mappers, form validation, upload handling, various open authentication technologies and several common framework related tools.
+### logging module
+- A Python logging configuration consists of four parts: Loggers, Filters, Formatters and Handlers.
+- Each message that is written to the logger is a Log Record. Each log record also has a log level indicating the severity of that specific message. A log record can also contain useful metadata that describes the event that is being logged. This can include details such as a stack trace or an error code.
+- When a message is given to the logger, the log level of the message is compared to the log level of the logger. If the log level of the message meets or exceeds the log level of the logger itself, the message will undergo further processing. If it doesn’t, the message will be ignored. Once a logger has determined that a message needs to be processed, it is passed to a Handler.
+- The handler is the engine that determines what happens to each message in a logger. It describes a particular logging behavior, such as writing a message to the screen, to a file, or to a network socket.
+- Like loggers, handlers also have a log level. If the log level of a log record doesn’t meet or exceed the level of the handler, the handler will ignore the message.
+- A logger can have multiple handlers, and each handler can have a different log level. In this way, it is possible to provide different forms of notification depending on the importance of a message. For example, you could install one handler that forwards ```ERROR``` and ```CRITICAL``` messages to a paging service, while a second handler logs all messages (including ```ERROR``` and ```CRITICAL``` messages) to a file for later analysis.
+- A filter is used to provide additional control over which log records are passed from logger to handler.
+- Filters can be installed on loggers or on handlers; multiple filters can be used in a chain to perform multiple filtering actions.
+- Ultimately, a log record needs to be rendered as text. Formatters describe the exact format of that text. A formatter usually consists of a Python formatting string containing ```LogRecord``` attributes; however, you can also write custom formatters to implement specific formatting behavior.
+- The dotted paths of logger names define a hierarchy. The ```project.interesting``` logger is considered to be a parent of the ```project.interesting.stuff``` logger; the project ```logger``` is a parent of the ```project.interesting``` logger.
+- Why is the hierarchy important? Well, because loggers can be set to propagate their logging calls to their parents. In this way, you can define a single set of handlers at the root of a logger tree, and capture all logging calls in the subtree of loggers. A logger defined in the ```project``` namespace will catch all logging messages issued on the ```project.interesting``` and ```project.interesting.stuff``` loggers.
+- ```logger.exception()```: Creates an ```ERROR``` level logging message wrapping the current exception stack frame.
+- Python’s logging library provides several techniques to configure logging, ranging from a programmatic interface to configuration files. By default, Django uses the ```dictConfig``` format.
+
 
 ### Pandas
 - ```pandas.DataFrame.shape``` - Return a tuple representing the dimensionality of the DataFrame.
