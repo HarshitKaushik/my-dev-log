@@ -73,7 +73,12 @@ constructor(isAsync: boolean = false)
 initdb '/usr/local/var/postgres'
 ```
 - You could also implement a script to start the server each time you boot up the machine, but I like to have control over when to start and stop my database server to avoid complications.
-
+- How can I drop all the tables in a PostgreSQL database?
+```sql
+select 'drop table if exists "' || tablename || '" cascade;' 
+from pg_tables
+where schemaname = '${schemaName}';
+```
 
 ## Python
 - ASGI (Asynchronous Server Gateway Interface) is a spiritual successor to WSGI, intended to provide a standard interface between async-capable Python web servers, frameworks, and applications.
@@ -102,9 +107,11 @@ datetime.timedelta(0, 4, 316543)
 316543
 ```
 - In ```datetime.timedelta``` variable, use ```.total_seconds()``` to access the time delta in seconds which is a floating-point value.
+- Difference between ```except:``` and ```except Exception as e:``` is that ```except:``` accepts all exceptions, whereas.
 
 ### Psycopg
 - Psycopg is the most popular PostgreSQL database adapter for the Python programming language. Its main features are the complete implementation of the Python DB API 2.0 specification and the thread safety (several threads can share the same connection). It was **designed for heavily multi-threaded applications** that create and destroy lots of cursors and make a large number of concurrent “INSERT”s or “UPDATE”s.
+- In your query string, you always have to use %s placeholders, even when passing a number. All Python objects are converted by Psycopg in their SQL representation, so they get passed to the query as strings. See Passing parameters to SQL queries.
 
 ### Django
 - You’ve started the Django development server, a lightweight Web server written purely in Python. We’ve included this with Django so you can develop things rapidly, without having to deal with configuring a production server – such as Apache – until you’re ready for production.
@@ -133,6 +140,7 @@ datetime.timedelta(0, 4, 316543)
 - Serializers allow complex data such as querysets and model instances to be converted to native Python datatypes that can then be easily rendered into JSON, XML or other content types. Serializers also provide deserialization, allowing parsed data to be converted back into complex types, after first validating the incoming data.
 - You need to call ```is_valid``` during deserialization process before writing data to DB. ```is_valid``` perform validation of input data and confirm that this data contain all required fields and all fields have correct types. If validation process succeded ```is_valid``` set ```validated_data``` dictionary which is used for creating or updating data in DB. Otherwise, serializer's property errors will contain information about errors in input data, and you can send this information as HTTP response in your view.
 - If the model field has ```blank=True```, then ```required``` is set to ```False``` on the form field. Otherwise, ```required=True```.
+- Why are blank and null distinct options for a django model? They have two entirely different meanings. ```blank```: determines whether the field should be validated as required or not in forms. False means the form will generate an error if not provided, while True means empty values are allowed. ```null```: determines whether the field should be set as ```NULL``` or ```NOT NULL``` at the DB level. This has nothing to do with form validation.
 - Sometimes even ```Manager.raw()``` isn’t quite enough: you might need to perform queries that don’t map cleanly to models, or directly execute UPDATE, INSERT, or DELETE queries.
 - ```RunScript``` -  The runscript command lets you run an arbitrary set of python commands within the Django context. This file must implement a run() function. This is what gets called when you run the script. You can import any models or other parts of your django project to use in these scripts.
 ```bash
@@ -170,6 +178,10 @@ first_name = John
 last_name = Doe
 ```
 - Lookup functions can mix the use of Q objects and keyword arguments. All arguments provided to a lookup function (be they keyword arguments or Q objects) are “AND”ed together. However, if a Q object is provided, it must precede the definition of any keyword arguments.
+- Django will choose the first template it finds whose name matches, and if you had a template with the same name in a different application, Django would be unable to distinguish between them. We need to be able to point Django at the right one, and the best way to ensure this is by namespacing them. That is, by putting those templates inside another directory named for the application itself.
+- How to get filtered queryset in Django admin? New version of Django admin use custom objects for ```ChangeList``` view with custom ```get_queryset``` method. You must override ```self.get_changelist(request)``` and return your custom ```ChangeList``` with overridden ```get_queryset```.
+- You set the 'catch all' logger by referencing it with the empty string: ```''```.
+- Remove the default delete action in Django admin? In your admin class, define ```has_delete_permission``` to return ```False```.
 
 ### Flask
 - “Micro” does not mean that your whole web application has to fit into a single Python file (although it certainly can), **nor does it mean that Flask is lacking in functionality**. The “micro” in microframework means Flask aims to keep the core simple but extensible. Flask won’t make many decisions for you, such as what database to use. Those decisions that it does make, such as what templating engine to use, are easy to change. Everything else is up to you, so that Flask can be everything you need and nothing you don’t.
