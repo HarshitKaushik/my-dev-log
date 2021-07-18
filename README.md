@@ -1,5 +1,5 @@
 # my-dev-log
-A loosely-updated log of my experiences as a software engineer.
+A loosely-updated log of my experiences as a software engineer since 2021.
 
 ## Java
 ### SAX Parsing
@@ -14,7 +14,6 @@ A loosely-updated log of my experiences as a software engineer.
 - SolrClient is abstract, so to connect to a remote Solr instance, you’ll actually create an instance of either HttpSolrClient, or CloudSolrClient. Both communicate with Solr via HTTP, the difference is that HttpSolrClient is configured using an explicit Solr URL, while CloudSolrClient is configured using the zkHost String for a SolrCloud cluster.
 - SolrJ has an embedded jetty dependency for running solr in web server and jetty is a web server. Also, this jetty version may conflict with the jetty version bundled with dropwizard microservices framework.
 - The %2C translates to a comma (,). I saw this while searching for a sentence with a comma in it and on the url, instead of showing a comma, it had %2C.
-
 ## Javascript
 ### Angular
 - Yes, that is most likely why the author uses take(1) operator. It's job is to pass one value to an observable and then unsubscribe from the source. But depending on the service it may not be required. 
@@ -64,7 +63,6 @@ constructor(isAsync: boolean = false)
 ```
 - Constructor of EventEmitter (above) - Creates an instance of this class that can deliver events synchronously or asynchronously.
 - The slice() method returns a shallow copy of a portion of an array into a new array object selected from begin to end (end not included). The original array will not be modified.
-
 ## Postgres
 - JSONB is a powerful tool, but it comes at some cost because you need to adapt the way you query and handle the data. And it’s not rare to load the entire jsonb object into memory, transform it using your preferred programming language, and then saving it back to the database. But, you just created another problem: performance bottlenecks and resource waste.
 - Dumps can be output in script or archive file formats. Script dumps are plain-text files containing the SQL commands required to reconstruct the database to the state it was in at the time it was saved. To restore from such a script, feed it to psql(1). Script files can be used to reconstruct the database even on other machines and other architectures; with some modifications even on other SQL database products. The alternative archive file formats must be used with pg_restore(1) to rebuild the database. They allow pg_restore to be selective about what is restored, or even to reorder the items prior to being restored. The archive file formats are designed to be portable across architectures.
@@ -79,7 +77,6 @@ select 'drop table if exists "' || tablename || '" cascade;'
 from pg_tables
 where schemaname = '${schemaName}';
 ```
-
 ## Python
 - ASGI (Asynchronous Server Gateway Interface) is a spiritual successor to WSGI, intended to provide a standard interface between async-capable Python web servers, frameworks, and applications.
 - Where WSGI provided a standard for synchronous Python apps, ASGI provides one for both asynchronous and synchronous apps, with a WSGI backwards-compatibility implementation and multiple servers and application frameworks.
@@ -111,11 +108,9 @@ datetime.timedelta(0, 4, 316543)
 - Using List/Tuple/etc. from ```typing``` vs directly referring type as list/tuple/etc. - ```typing.Tuple```, ```typing.List``` and other similar types are generic types; this means you can specify what type their contents must be. For example, using a phrase like ```a: Tuple[int, int, float]```.
 - You should always pick the ```typing``` generics even when you are not currently restricting the contents. It is easier to add that constraint later with a generic type as the resulting change will be smaller.
 - What is ```__future__``` in Python used for and how/when to use it, and how it works? Future statements are special -- they change how your Python module is parsed, which is why they must be at the top of the file. They give new -- or different -- meaning to words or symbols in your file. A future statement is a directive to the compiler that a particular module should be compiled using syntax or semantics that will be available in a specified future release of Python. The future statement is intended to ease migration to future versions of Python that introduce incompatible changes to the language. It allows use of the new features on a per-module basis before the release in which the feature becomes standard.
-
 ### Psycopg
 - Psycopg is the most popular PostgreSQL database adapter for the Python programming language. Its main features are the complete implementation of the Python DB API 2.0 specification and the thread safety (several threads can share the same connection). It was **designed for heavily multi-threaded applications** that create and destroy lots of cursors and make a large number of concurrent “INSERT”s or “UPDATE”s.
 - In your query string, you always have to use %s placeholders, even when passing a number. All Python objects are converted by Psycopg in their SQL representation, so they get passed to the query as strings. See Passing parameters to SQL queries.
-
 ### Django
 - You’ve started the Django development server, a lightweight Web server written purely in Python. We’ve included this with Django so you can develop things rapidly, without having to deal with configuring a production server – such as Apache – until you’re ready for production.
 - By default, the runserver command starts the development server on the internal IP at port 8000.
@@ -192,7 +187,6 @@ last_name = Doe
 $ ./manage.py sqldiff -a
 ```
 - ```instance.__dict__``` - Convert django model object to dict with all of the fields intact.
-
 ### Flask
 - “Micro” does not mean that your whole web application has to fit into a single Python file (although it certainly can), **nor does it mean that Flask is lacking in functionality**. The “micro” in microframework means Flask aims to keep the core simple but extensible. Flask won’t make many decisions for you, such as what database to use. Those decisions that it does make, such as what templating engine to use, are easy to change. Everything else is up to you, so that Flask can be everything you need and nothing you don’t.
 - Flask is a micro web framework written in Python. It is classified as a microframework because it does not require particular tools or libraries. It has no database abstraction layer, form validation, or any other components where pre-existing third-party libraries provide common functions. However, Flask supports extensions that can add application features as if they were implemented in Flask itself. Extensions exist for object-relational mappers, form validation, upload handling, various open authentication technologies and several common framework related tools.
@@ -210,13 +204,10 @@ $ ./manage.py sqldiff -a
 - Why is the hierarchy important? Well, because loggers can be set to propagate their logging calls to their parents. In this way, you can define a single set of handlers at the root of a logger tree, and capture all logging calls in the subtree of loggers. A logger defined in the ```project``` namespace will catch all logging messages issued on the ```project.interesting``` and ```project.interesting.stuff``` loggers.
 - ```logger.exception()```: Creates an ```ERROR``` level logging message wrapping the current exception stack frame.
 - Python’s logging library provides several techniques to configure logging, ranging from a programmatic interface to configuration files. By default, Django uses the ```dictConfig``` format.
-
 ### Celery
 - What is the difference between the get logger functions from ```celery.utils.log``` and ```logging```? From experience using get_task_logger seems to get you a few things of importance, especially with Sentry. Auto-prepending task names to your log output. The ability to set log handling rules at a higher level than just module (I believe it's actually setting the logger name to celery.task). Probably, most importantly for Sentry setup, is it hooks the logging into their log handlers which Sentry makes use of.
-
 ### Pandas
 - ```pandas.DataFrame.shape``` - Return a tuple representing the dimensionality of the DataFrame.
-
 ### MLflow
 - An MLflow Model is a standard format for packaging machine learning models that can be used in a variety of downstream tools—for example, real-time serving through a REST API or batch inference on Apache Spark. The format defines a convention that lets you save a model in different “flavors” that can be understood by different downstream tools.
 - Flavors are the key concept that makes MLflow Models powerful: they are a convention that deployment tools can use to understand the model, which makes it possible to write tools that work with models from any ML library without having to integrate each tool with each library. MLflow defines several “standard” flavors that all of its built-in deployment tools support, such as a “Python function” flavor that describes how to run the model as a Python function. However, libraries can also define and use other flavors. For example, MLflow’s mlflow.sklearn library allows loading models back as a scikit-learn Pipeline object for use in code that is aware of scikit-learn, or as a generic Python function for use in tools that just need to apply the model (for example, the mlflow sagemaker tool for deploying models to Amazon SageMaker).
