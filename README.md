@@ -167,6 +167,8 @@ formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(messag
 handler.setFormatter(formatter)
 logger.addHandler(handler)
 ```
+- Check if a given key already exists in a dictionary - ` if key in dictVar:`
+
 ### Psycopg
 - Psycopg is the most popular PostgreSQL database adapter for the Python programming language. Its main features are the complete implementation of the Python DB API 2.0 specification and the thread safety (several threads can share the same connection). It was **designed for heavily multi-threaded applications** that create and destroy lots of cursors and make a large number of concurrent “INSERT”s or “UPDATE”s.
 - In your query string, you always have to use %s placeholders, even when passing a number. All Python objects are converted by Psycopg in their SQL representation, so they get passed to the query as strings. See Passing parameters to SQL queries.
@@ -302,6 +304,21 @@ os.environ
 - Show the length of a queryset in a template? Give `{{ some_queryset.count }}` a try.
 - Aggregation - The topic guide on Django’s database-abstraction API described the way that you can use Django queries that create, retrieve, update and delete individual objects. However, sometimes you will need to retrieve values that are derived by summarizing or aggregating a collection of objects. This is called aggregation.
 - The database user you use for django to connect to the database should be the owner of the tables referenced in the code.
+- How to disable the 'Add' action for a specific model? Refer below code.
+```python
+class MyAdmin(admin.ModelAdmin):
+     def has_add_permission(self, request, obj=None):
+        return False
+```
+- `_set` in Django for a queryset - What you are seeing is a reverse related object lookup. Now, given object e of type Entry, you would do e.blog to access the related object Blog - which is a forward relation. The _set is a reverse lookup class variable django puts in for you. The reason the reverse is a queryset is, ForeignKey is 1-to-many relationship. Hence, the reverse is a queryset.
+```python
+class Blog(models.Model):
+    pass
+
+class Entry(...):
+    blog = Blog(...)
+```
+- Data Migrations - `python manage.py makemigrations --empty yourappname` - Now, all you need to do is create a new function and have RunPython use it. RunPython expects a callable as its argument which takes two arguments - the first is an app registry that has the historical versions of all your models loaded into it to match where in your history the migration sits, and the second is a SchemaEditor, which you can use to manually effect database schema changes (but beware, doing this can confuse the migration autodetector!)
 ### Flask
 - “Micro” does not mean that your whole web application has to fit into a single Python file (although it certainly can), **nor does it mean that Flask is lacking in functionality**. The “micro” in microframework means Flask aims to keep the core simple but extensible. Flask won’t make many decisions for you, such as what database to use. Those decisions that it does make, such as what templating engine to use, are easy to change. Everything else is up to you, so that Flask can be everything you need and nothing you don’t.
 - Flask is a micro web framework written in Python. It is classified as a microframework because it does not require particular tools or libraries. It has no database abstraction layer, form validation, or any other components where pre-existing third-party libraries provide common functions. However, Flask supports extensions that can add application features as if they were implemented in Flask itself. Extensions exist for object-relational mappers, form validation, upload handling, various open authentication technologies and several common framework related tools.
@@ -323,6 +340,7 @@ os.environ
 - What is the difference between the get logger functions from `celery.utils.log` and `logging`? From experience using get_task_logger seems to get you a few things of importance, especially with Sentry. Auto-prepending task names to your log output. The ability to set log handling rules at a higher level than just module (I believe it's actually setting the logger name to celery.task). Probably, most importantly for Sentry setup, is it hooks the logging into their log handlers which Sentry makes use of.
 ### Pandas
 - `pandas.DataFrame.shape` - Return a tuple representing the dimensionality of the DataFrame.
+- How to iterate over rows in a DataFrame in Pandas? `DataFrame.iterrows` is a generator which yields both the index and row (as a Series).
 ### MLflow
 - An MLflow Model is a standard format for packaging machine learning models that can be used in a variety of downstream tools—for example, real-time serving through a REST API or batch inference on Apache Spark. The format defines a convention that lets you save a model in different “flavors” that can be understood by different downstream tools.
 - Flavors are the key concept that makes MLflow Models powerful: they are a convention that deployment tools can use to understand the model, which makes it possible to write tools that work with models from any ML library without having to integrate each tool with each library. MLflow defines several “standard” flavors that all of its built-in deployment tools support, such as a “Python function” flavor that describes how to run the model as a Python function. However, libraries can also define and use other flavors. For example, MLflow’s mlflow.sklearn library allows loading models back as a scikit-learn Pipeline object for use in code that is aware of scikit-learn, or as a generic Python function for use in tools that just need to apply the model (for example, the mlflow sagemaker tool for deploying models to Amazon SageMaker).
